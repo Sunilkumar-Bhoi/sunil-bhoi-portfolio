@@ -2,10 +2,10 @@ import React, { forwardRef } from 'react';
 
 const HeroSection = forwardRef(({ scrollToSection }, ref) => {
   return (
-    <section ref={ref} className="section" id="hero">
+    <section ref={ref} className="section" id="home">
       <div className="container hero">
         <h1>Hi, I'm Sunil</h1>
-        <h2>Computer Engineering Student | Web & AI Enthusiast</h2>
+        <h2>Computer Engineering Student | Embedded Engineer</h2>
         <p>Turning ideas into practical, real-world solutions.</p>
         <div className="hero-buttons">
           <button className="btn btn-primary" onClick={() => scrollToSection('projects')}>

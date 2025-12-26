@@ -10,7 +10,7 @@ import ExperienceSection from './components/ExperienceSection';
 import ContactSection from './components/ContactSection';
 
 export default function App() {
-  const [activeSection, setActiveSection] = useState('hero');
+  const [activeSection, setActiveSection] = useState('home');
   const [scrolled, setScrolled] = useState(false);
   const sectionsRef = useRef({});
 
@@ -47,7 +47,7 @@ export default function App() {
         scrolled={scrolled}
         scrollToSection={scrollToSection}
       />
-      <HeroSection ref={el => sectionsRef.current['hero'] = el} scrollToSection={scrollToSection} />
+      <HeroSection ref={el => sectionsRef.current['home'] = el} scrollToSection={scrollToSection} />
       <AboutSection ref={el => sectionsRef.current['about'] = el} />
       <EducationSection ref={el => sectionsRef.current['education'] = el} />
       <SkillsSection ref={el => sectionsRef.current['skills'] = el} />

@@ -5,7 +5,7 @@ const EducationSection = forwardRef((props, ref) => {
     {
       degree: 'B.Tech – Computer Engineering',
       institution: 'Madhuben And Bhanubhai Patel Institute of Technology',
-      period: '2022 – 2026 | Mahemdavad, Gujarat',
+      period: '2022 – 2026 | Anand, Gujarat',
       score: 'CGPA: 8.50'
     },
     {

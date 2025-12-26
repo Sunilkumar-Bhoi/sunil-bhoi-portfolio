@@ -1,12 +1,27 @@
 import React, { useState, forwardRef } from 'react';
+import { FaLinkedin, FaGithub} from 'react-icons/fa';
 
 const ContactSection = forwardRef((props, ref) => {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState(""); // To handle "Sending...", "Success", or "Error"
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`Thank you for your message, ${formData.name}! I'll get back to you soon.`);
-    setFormData({ name: '', email: '', message: '' });
+    const form = e.target;
+    const data = new FormData(form);
+
+    setStatus("Sending...");
+
+    // Netlify simple AJAX submission
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(data).toString(),
+    })
+      .then(() => {
+        setStatus("Success!");
+        form.reset();
+      })
+      .catch((error) => setStatus("Error. Please try again."));
   };
 
   return (
@@ -26,42 +41,40 @@ const ContactSection = forwardRef((props, ref) => {
               </div>
             </div>
             <div className="social-links">
-              <a href="https://linkedin.com/in/Sunilkumar-Bhoi" target="_blank" rel="noopener noreferrer" className="social-link">in</a>
-              <a href="https://github.com/Sunilkumar-Bhoi" target="_blank" rel="noopener noreferrer" className="social-link">GH</a>
-              <a href="mailto:sunilbhoi.dev@gmail.com" className="social-link">@</a>
+              <a href="https://linkedin.com/in/Sunilkumar-Bhoi" target="_blank" rel="noopener noreferrer" className="social-link" title="LinkedIn"><FaLinkedin /></a>
+              <a href="https://github.com/Sunilkumar-Bhoi" target="_blank" rel="noopener noreferrer" className="social-link"><FaGithub /></a>
             </div>
           </div>
-          <div className="contact-form">
+
+          {/* Added Netlify Form attributes for automatic integration */}
+          <form 
+            className="contact-form" 
+            onSubmit={handleSubmit} 
+            data-netlify="true" 
+            name="contact"
+          >
+            {/* Hidden input required for Netlify forms in React */}
+            <input type="hidden" name="form-name" value="contact" />
+
             <div className="form-group">
               <label htmlFor="name">Name</label>
-              <input
-                type="text"
-                id="name"
-                value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
-              />
+              <input type="text" id="name" name="name" required placeholder="Your Name" />
             </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
-              />
+              <input type="email" id="email" name="email" required placeholder="email@example.com" />
             </div>
             <div className="form-group">
               <label htmlFor="message">Message</label>
-              <textarea
-                id="message"
-                value={formData.message}
-                onChange={(e) => setFormData({...formData, message: e.target.value})}
-              />
+              <textarea id="message" name="message" required placeholder="How can I help you?" rows="4" />
             </div>
-            <button onClick={handleSubmit} className="btn btn-primary" style={{width: '100%'}}>
-              Send Message
+            
+            <button type="submit" className="btn btn-primary" style={{width: '100%'}}>
+              {status === "Sending..." ? "Sending..." : "Send Message"}
             </button>
-          </div>
+            
+            {status === "Success!" && <p className="success-msg">Message sent successfully!</p>}
+          </form>
         </div>
       </div>
     </section>
